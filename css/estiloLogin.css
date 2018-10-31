@@ -1,0 +1,48 @@
+/*Div de Login*/
+
+#divLogin{
+    margin-top: 100px;
+    margin-left: 450px;
+    background-color: rgba(63, 19, 55, 0.5);
+    padding: 2%;
+    color: white;
+    border-radius: 20px;
+    font-weight: bold;
+    display: none;
+
+}
+
+#divLogin h1{
+    font-weight: bold;
+    text-align: center;
+}
+
+#divLogin h3{
+    font-weight: bold;
+    text-align: center;
+}
+
+#divLogin button{
+    background-color: #3EC374;
+    border-color: #3EC374;
+}
+
+#botaoLogin{
+    text-align: center;
+    font-weight: bold;
+    font-size: 16px;
+    width: 30%;
+    margin-left: 36%;
+}
+
+/*Fim da Div de Login*/
+
+/*Body - background*/
+
+body{
+    background-image: url("bibliotecaFundo.jpg");
+    background-repeat: no-repeat;
+    background-size: 100% 128%;
+}
+
+/*Fim do Body - background*/
