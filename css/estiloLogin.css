@@ -40,7 +40,7 @@
 /*Body - background*/
 
 body{
-    background-image: url("bibliotecaFundo.jpg");
+    background-image: url("../imagens/bibliotecaFundo.jpg");
     background-repeat: no-repeat;
     background-size: 100% 128%;
 }

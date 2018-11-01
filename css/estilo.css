@@ -1,0 +1,90 @@
+
+/*Cabeçalho*/
+
+#cabecalho{
+    background-color:  #3F1337;
+    border-radius: 0;
+    border-style: none;
+}
+
+#imgLogo{
+    width: 110px;
+}
+
+#linkLogo{
+    font-weight: bold;
+    text-decoration: none;
+    color: white;
+    font-size: 30px;
+}
+
+#iconesCabecalho{
+    margin-top: 10px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/*Fim Cabeçalho*/
+
+/*Menu Lateral*/
+
+#menuLateral{
+    background-color: #F1F1F1;
+    height: 100%;
+}
+
+#menuLateral p{
+    margin-top: 15px;
+    width: 100%;
+}
+
+#menuLateral p a{
+    width: 100%;
+    background-color: #3EC374;
+    border-color: #3EC374;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+#menuLateral p a:hover{
+    opacity: 0.7;
+}
+
+/*Fim Menu Lateral*/
+
+/*Rodapé*/
+
+#rodape{
+    padding: 5px;
+    background-color: #3F1337;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+#rodape p{
+    margin-bottom: 0;
+}
+
+/*Fim Rodapé*/
+
+/*Div Body*/
+
+#conteudoPrincipalFixo{
+    height: 475px;
+}
+
+#conteudoPrincipalFixo .row{
+    height: 100%;
+}
+
+/*Fim Div Body*/
+
+/*Conteudo Principal*/
+
+#conteudoPrincipal{
+    height: 100%;
+}
+
+/*Fim Conteudo Principal*/
