@@ -45,7 +45,7 @@ class categoriaDao implements genericsDao
         try{
             $statement = $pdo->prepare("UPDATE categoria SET nome = :nome, descricao = :descricaoCategoria, assunto = :assunto WHERE idCategoria = :id");
 
-            $statement->bindValue(":id",$objeto->getIdDescricao());
+            $statement->bindValue(":id",$objeto->getIdCategoria());
             $statement->bindValue(":nome",$objeto->getNome());
             $statement->bindValue(":descricaoCategoria",$objeto->getDescricaoCategoria());
             $statement->bindValue(":assunto",$objeto->getAssunto());
@@ -97,7 +97,7 @@ class categoriaDao implements genericsDao
             if($statement->execute()){
                 $rs= $statement->fetch(PDO::FETCH_OBJ);
 
-                $objeto = new Categoria();
+                $objeto = new Categoria('','','','');
 
                 $objeto->setIdCategoria($rs->idCategoria);
                 $objeto->setNome($rs->nome);

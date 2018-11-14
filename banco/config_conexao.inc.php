@@ -6,5 +6,5 @@
  * Time: 12:04
  */
 define('BANCO' , "mysql:host=localhost;dbname=bd_biblioteca");
-define('usuarioDao', "root");
-define('SENHA' , "!@#$1234");
+define('USUARIO', "root");
+define('SENHA' , "201121061");

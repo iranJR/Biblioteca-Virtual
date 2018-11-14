@@ -102,7 +102,7 @@ class exemplarDao implements genericsDao
             if($statement->execute()){
                 $rs= $statement->fetch(PDO::FETCH_OBJ);
 
-                $objeto = new Exemplar();
+                $objeto = new Exemplar('','','','','','');
 
                 $objeto->setIdExemplar($rs->idExemplar);
                 $objeto->setIdLivro($rs->idLivro);

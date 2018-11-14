@@ -102,7 +102,7 @@ class emprestimoDao implements genericsDao
             if($statement->execute()){
                 $rs= $statement->fetch(PDO::FETCH_OBJ);
 
-                $objeto = new Emprestimo();
+                $objeto = new Emprestimo('','','','','','');
 
                 $objeto->setIdEmprestimo($rs->idEmprestimo);
                 $objeto->setDataEmprestimo($rs->dataEmprestimo);

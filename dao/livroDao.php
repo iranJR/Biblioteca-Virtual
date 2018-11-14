@@ -27,6 +27,7 @@ class livroDao implements genericsDao
             $statement->bindValue(":capa",$objeto->getCapa());
             if($statement->execute()){
                 if($statement->rowCount()>0){
+                    $objeto->setIdLivro($pdo->lastInsertId());
                     return"<script>alert('Cadastro realizado com sucesso');</script>";
                 }
                 else{
@@ -108,7 +109,7 @@ class livroDao implements genericsDao
             if($statement->execute()){
                 $rs= $statement->fetch(PDO::FETCH_OBJ);
 
-                $objeto = new Livro();
+                $objeto = new Livro('','','','','','','','','');
 
                 $objeto->setIdLivro($rs->idLivro);
                 $objeto->setTitulo($rs->titulo);

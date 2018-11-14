@@ -104,7 +104,7 @@ class usuarioDao implements genericsDao
             if($statement->execute()){
                 $rs= $statement->fetch(PDO::FETCH_OBJ);
 
-                $objeto = new Usuario();
+                $objeto = new Usuario('','','','','','');
 
                 $objeto->setIdUsuario($rs->idUsuario);
                 $objeto->setNome($rs->nome);

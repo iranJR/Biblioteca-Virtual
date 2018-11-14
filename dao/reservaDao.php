@@ -97,7 +97,7 @@ class reservaDao implements genericsDao
             if($statement->execute()){
                 $rs= $statement->fetch(PDO::FETCH_OBJ);
 
-                $objeto = new Reserva();
+                $objeto = new Reserva('','','','');
 
                 $objeto->setIdReserva($rs->idReserva);
                 $objeto->setDataReserva($rs->dataReserva);

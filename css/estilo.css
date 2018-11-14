@@ -30,7 +30,7 @@
 
 #menuLateral{
     background-color: #F1F1F1;
-    height: 100%;
+    height: 500px;
 }
 
 #menuLateral p{
@@ -53,7 +53,7 @@
 
 /*Fim Menu Lateral*/
 
-/*Rodapé*/
+/*Rodapé Página Grande*/
 
 #rodape{
     padding: 5px;
@@ -61,18 +61,48 @@
     color: white;
     font-size: 12px;
     font-weight: bold;
+    margin-top: 10px;
+}
+
+#divRodapeContainer{
+    margin-left: 0;
+    margin-right: 0;
+    padding-right: 0;
+    padding-left: 0;
+    overflow: hidden;
+}
+
+#divRodapeContainer .col-md-12{
+    padding-left: 0;
+    padding-right: 0;
 }
 
 #rodape p{
     margin-bottom: 0;
 }
 
-/*Fim Rodapé*/
+/*Fim Rodapé Página Grande*/
+
+/*Rodapé Página Pequena*/
+
+#rodapePeq{
+    padding: 5px;
+    background-color: #3F1337;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+#rodapePeq p{
+    margin-bottom: 0;
+}
+
+/*Fim Rodapé Página Pequena*/
 
 /*Div Body*/
 
 #conteudoPrincipalFixo{
-    height: 475px;
+    height: auto;
 }
 
 #conteudoPrincipalFixo .row{
@@ -88,3 +118,223 @@
 }
 
 /*Fim Conteudo Principal*/
+
+/*Exibição de Registros Admin*/
+
+/*Form de busca de produtos*/
+#buscarRegistro{
+    margin-top: 30px;
+    margin-left: 30px;
+}
+
+#buscarRegistro button{
+    font-weight: bold;
+    background-color: #3EC374;
+    border-color: #3EC374;
+}
+
+#buscarRegistro button:hover{
+    opacity: 0.7;
+}
+
+#buscarRegistro input{
+    font-weight: bold;
+    background-color: whitesmoke;
+}
+
+#hrRegistros{
+    background-color: #bbb;
+    height: 1px;
+}
+/*Fim do Form de busca de produtos*/
+
+/*Div de exibição dos produtos cadastrados*/
+#DivRegistroTabela{
+    background-color: #3A3A3A;
+    text-align: center;
+    text-transform: uppercase;
+    color: white;
+}
+
+#theadRegistro{
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: large;
+}
+
+#tabelaExibir{
+    margin: 0 auto;
+    background-color: whitesmoke;
+    width: 95%;
+    border-radius: 5px;
+    color: #3A3A3A;
+}
+
+#msgExibirRegistro{
+    color: white;
+    font-weight: bold;
+    text-align: left;
+}
+
+#msgExibirRegistro .glyphicon-asterisk{
+    color: #3EC374;
+}
+
+#DivRegistroTabela h1{
+    font-weight: bold;
+    text-transform: none;
+}
+
+#theadRegistro tr th{
+    text-align: center;
+}
+
+#tbodyRegistro tr td a{
+    font-weight: bold;
+    text-decoration: none;
+    color: #1D2329;
+}
+
+#tbodyRegistro tr:hover{
+    background-color: white;
+}
+
+#tbodyRegistro tr td a:hover{
+    opacity: 0.7;
+}
+
+#tbodyRegistro .glyphicon-remove{
+    color: red;
+}
+
+#tbodyRegistro .glyphicon-pencil{
+    color: #FF8C00;
+}
+
+#tbodyRegistro .glyphicon-info-sign{
+    color: #3F1337;
+}
+
+#tbodyRegistro .glyphicon-plus-sign{
+    color: #3EC374;
+}
+
+/*Fim da Div de exibição dos produtos cadastrados*/
+
+/*Paginação*/
+#UlPaginacao li a{
+    background-color: #3EC374;
+    color: white;
+    font-weight: bold;
+}
+
+#UlPaginacao li a:hover{
+    opacity: 0.7;
+}
+
+#Paginacao{
+    text-align: center;
+}
+
+.esconder{
+    visibility: hidden;
+}
+
+.mostrar{
+    visibility: visible;
+}
+/*Fim da Paginação*/
+
+/*Modal de exclusão de registro*/
+
+#cabecalhoModal{
+    background-color: #3F1337;
+    color: white;
+    font-weight: bold;
+}
+
+#fecharModal{
+    color: #bbb;
+    opacity: 1;
+}
+
+#fecharModal:hover{
+    opacity: 0.7;
+}
+
+#bodyModal{
+    font-weight: bold;
+    color: #3A3A3A;
+    background-color: whitesmoke;
+}
+
+#rodapeModal{
+    background-color: whitesmoke;
+}
+
+#aBotaoRemover{
+    font-weight: bold;
+    background-color: #3EC374;
+    border-color: #3EC374;
+    color: white;
+}
+
+#aBotaoRemover:hover{
+    opacity: 0.7;
+}
+
+#aBotaoCancelar{
+    background-color: #3A3A3A;
+    border-color: #3A3A3A;
+    font-weight: bold;
+    color: white;
+    text-transform: uppercase;
+}
+
+#aBotaoCancelar:hover{
+    opacity: 0.7;
+}
+/*Fim Modal de exclusão de registro*/
+
+/*Fim Exibição de Registros Admin*/
+
+/*Cadastro / Edição de Registro*/
+
+#DivCadastroRegistro{
+    background-color: #3A3A3A;
+    color: white;
+}
+
+#hrCadastroRegistro{
+    background-color: #bbb;
+    height: 1px;
+}
+
+#h2CadastroRegistro{
+    color: white;
+    font-weight: bold;
+    text-transform: none;
+}
+
+
+#DivCadastroRegistro legend{
+    color: white;
+    font-weight: bold;
+}
+
+#DivCadastroRegistro input{
+    font-weight: bold;
+}
+
+#botaoCadastroRegistro{
+    background-color: #3EC374;
+    border-color: #3EC374;
+    width: 30%;
+    font-size: 16px;
+}
+
+#botaoCadastroRegistro:hover{
+    opacity: 0.7;
+}
+
+/*Fim Cadastro / Edição de Registro*/

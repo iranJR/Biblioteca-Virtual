@@ -39,11 +39,50 @@ function menuLateral()
         <!--Fim Menu Lateral-->";
 }
 
+function menuLateralAdmin()
+{
+    echo"
+        <!--Menu Lateral-->
+        <div id = 'menuLateral' class='col-sm-2 sidenav' >
+            <ul class='nav navbar-nav'>
+                    <li class='dropdown'>
+                        <a id='Categoria' class='dropdown-toggle btn btn-info' data-toggle='dropdown' href='#'>Produto</a>
+                        <ul id='SubMenu' class='dropdown-menu'>
+                            <li class='dropdown-header'>PRODUTO</li>
+                            <li><a href='../view/cadastroProduto.view.php'><span class='glyphicon glyphicon-chevron-right'></span> Cadastrar Produto</a></li>
+                            <li><a href='../view/produtoExibirAdmin.view.php'><span class='glyphicon glyphicon-chevron-right'></span> Listar Produtos</a></li>
+                            <li class='divider'></li>                            
+                        </ul>
+                    </li>
+                    </ul>
+        </div >
+        <!--Fim Menu Lateral-->";
+}
+
 function rodape()
 {
     echo"
     <!--Rodapé-->
-    <footer id = 'rodape' class='container-fluid text-center footer navbar-fixed-bottom' >
+    <div id='divRodapeContainer' class='container-fluid'>
+        <div class='row'>
+            <div class='col-md-12'>
+                <footer id = 'rodape' class='container-fluid text-center footer' >
+                    <p > Desenvolvido por :</p >
+                    <p > Iran Junior & Marcos Vinícius </p >
+                    <p > Instituto Vianna Júnior - 2018 </p >
+                </footer >
+            </div>
+        </div>
+    </div>
+    
+    <!--Fim MRodapé-->";
+}
+
+function rodapePagPequena()
+{
+    echo"
+    <!--Rodapé-->
+    <footer id = 'rodapePeq' class='container-fluid text-center footer navbar-fixed-bottom' >
         <p > Desenvolvido por :</p >
         <p > Iran Junior & Marcos Vinícius </p >
         <p > Instituto Vianna Júnior - 2018 </p >
