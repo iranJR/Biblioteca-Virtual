@@ -18,7 +18,7 @@ class reservaDao implements genericsDao
         global $pdo;
         try{
             $statement = $pdo->prepare("INSERT INTO reserva (dataReserva, idUsuario, idLivro) VALUES (:dataReserva, :idUsuario, :idLivro)");
-            $statement->bindValue(":dataReserva",$objeto->getDataRserva());
+            $statement->bindValue(":dataReserva",$objeto->getDataReserva());
             $statement->bindValue(":idUsuario",$objeto->getIdUsuario());
             $statement->bindValue(":idLivro",$objeto->getIdLivro());
             if($statement->execute()){
@@ -133,4 +133,6 @@ class reservaDao implements genericsDao
 
         }
     }
+
+
 }

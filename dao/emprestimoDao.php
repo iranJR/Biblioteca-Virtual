@@ -142,4 +142,33 @@ class emprestimoDao implements genericsDao
 
         }
     }
+
+    public function buscarPeloExemplarEmprestado($id)
+    {
+        global $pdo;
+        try{
+            $statement = $pdo->prepare("SELECT * FROM emprestimo, exemplar WHERE exemplar.idExemplar = emprestimo.idExemplar AND emprestimo.idExemplar = :id AND emprestimo.situacao = 'Emprestado' ");
+            $statement->bindValue(":id",$id);
+            if($statement->execute()){
+                $rs= $statement->fetch(PDO::FETCH_OBJ);
+
+                $objeto = new Emprestimo('','','','','','');
+
+                $objeto->setIdEmprestimo($rs->idEmprestimo);
+                $objeto->setDataEmprestimo($rs->dataEmprestimo);
+                $objeto->setDataDevolucao($rs->dataDevolucao);
+                $objeto->setIdExemplar($rs->idExemplar);
+                $objeto->setIdUsuario($rs->idUsuario);
+                $objeto->setSituacao($rs->situacao);
+
+                return $objeto;
+            }
+            else {
+                throw new PDOException("<script> alert('Não foi possível executar o código SQL !'); </script>");
+            }
+        } catch (PDOException $erro) {
+            return "Ocorreu um erro: " . $erro->getMessage();
+        }
+
+    }
 }

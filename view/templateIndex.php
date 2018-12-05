@@ -44,7 +44,6 @@ function menuLateralAdmin()
     echo"
         <!--Menu Lateral-->
         <div id = 'menuLateral' class='col-sm-2 sidenav' >
-                <p ><a class='btn btn-info' href = '../view/index.php' > Home </a ></p >
                 <p ><a class='btn btn-info' href = '../view/consultaAcervo.view.php' > Consultar Acervo </a ></p >
                 <p ><a class='btn btn-info' href = '../view/cadastroCategoria.view.php' > Cadastrar Categoria </a ></p >
                 <p ><a class='btn btn-info' href = '../view/exibirCategoria.view.php' > Exibir Categorias </a ></p >
@@ -53,7 +52,8 @@ function menuLateralAdmin()
                 <p ><a class='btn btn-info' href = '../view/exibirLivroExemplar.view.php' > Listar Exemplares </a ></p >
                 <p ><a class='btn btn-info' href = '../view/cadastroUsuario.view.php' > Cadastrar Usuário </a ></p >
                 <p ><a class='btn btn-info' href = '../view/exibirEmprestimos.view.php' > Consultar Emprestimos </a ></p >
-                <p ><a class='btn btn-info' href = '../controller/Logout.action.php' > Sair </a ></p >
+                <p ><a class='btn btn-info' href = '../view/exibirReservas.view.php' > Consultar Reservas </a ></p >
+                <p ><a class='btn btn-info' href = '../view/relatorio.view.php' > Relatórios </a ></p > 
         </div >
         <!--Fim Menu Lateral-->";
 }
@@ -66,6 +66,7 @@ function menuLateralUsuario()
                 <p ><a class='btn btn-info' href = '../view/index.php' > Home </a ></p >
                 <p ><a class='btn btn-info' href = '../view/consultaAcervo.view.php' > Consultar Acervo </a ></p >
                 <p ><a class='btn btn-info' href = '../view/meusEmprestimos.php' > Meus Emprestimos </a ></p >
+                <p ><a class='btn btn-info' href = '../view/minhasReservas.view.php' > Minhas Reservas </a ></p >
                 <p ><a class='btn btn-info' href = '../controller/Logout.action.php' > Sair </a ></p >
             </div >
         <!--Fim Menu Lateral-->";
@@ -95,6 +96,7 @@ function menuLateralFuncionario()
             <p ><a class='btn btn-info' href = '../view/cadastroUsuario.view.php' > Cadastrar Usuário </a ></p >
             <p ><a class='btn btn-info' href = '../view/consultaAcervo.view.php' > Consultar Acervo </a ></p >
             <p ><a class='btn btn-info' href = '../view/exibirEmprestimos.view.php' > Consultar Emprestimos </a ></p >
+            <p ><a class='btn btn-info' href = '../view/exibirReservas.view.php' > Consultar Reservas </a ></p >
             <p ><a class='btn btn-info' href = '../controller/Logout.action.php' > Sair </a ></p >
         </div >
         <!--Fim Menu Lateral-->";

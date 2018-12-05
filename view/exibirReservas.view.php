@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: iranf
  * Date: 05/12/2018
- * Time: 01:02
+ * Time: 18:21
  */
 
 session_start();
@@ -13,14 +13,20 @@ if(empty($_SESSION['idUsuario']) && empty($_SESSION['tipoUsuario']) && empty($_S
     echo "<script>window.location.href='../view/login.view.php?msg=".$msg."'</script>";
 }
 
+//Segunda verificação de segurança.
+if($_SESSION['tipoUsuario'] == "1" || $_SESSION['tipoUsuario'] == "2" || $_SESSION['tipoUsuario'] == "4"){
+    $msg = "Atenção: Você não possui autorização para acessar essa área do site !";
+    echo "<script>window.location.href='../view/index.php?msg=".$msg."'</script>";
+}
+
 require_once ("../view/templateIndex.php");
 require_once ('../banco/conexao_bd.php');
-require_once ("../dao/emprestimoDao.php");
-require_once ("../model/Emprestimo.php");
+
+if(!empty($_POST['busca'])){
+    $busca = $_POST['busca'];
+}
 
 global $pdo;
-
-$idLivro = $_GET['livro'];
 
 /*endereço atual da página*/
 $endereco = $_SERVER ['PHP_SELF'];
@@ -36,20 +42,38 @@ $pagina_atual = (isset($_GET['page']) && is_numeric($_GET['page'])) ? $_GET['pag
 $linha_inicial = ($pagina_atual - 1) * QTDE_REGISTROS;
 
 /* Instrução de consulta para paginação com MySQL*/
-
-$sql = "SELECT * FROM livro, exemplar where livro.idLivro = exemplar.idLivro AND livro.idLivro = :id LIMIT {$linha_inicial}, " . QTDE_REGISTROS;
-$statement = $pdo->prepare($sql);
-$statement->bindValue(":id", $idLivro);
-
+if(!empty($_POST['busca']) && $_POST['filtro'] == "titulo") {
+    $sql = "SELECT * FROM reserva, livro, usuario where reserva.idLivro = livro.idLivro AND reserva.idUsuario = usuario.idUsuario AND livro.titulo like :busca LIMIT {$linha_inicial}, " . QTDE_REGISTROS;
+    $statement = $pdo->prepare($sql);
+    $statement->bindValue(':busca', '%' . $busca . '%');
+}
+else if(!empty($_POST['busca']) && $_POST['filtro'] == "usuario") {
+    $sql = "SELECT * FROM reserva, livro, usuario where reserva.idLivro = livro.idLivro AND reserva.idUsuario = usuario.idUsuario AND usuario.nome like :busca LIMIT {$linha_inicial}, " . QTDE_REGISTROS;
+    $statement = $pdo->prepare($sql);
+    $statement->bindValue(':busca', '%' . $busca . '%');
+}
+else{
+    $sql = "SELECT * FROM reserva, livro, usuario where reserva.idLivro = livro.idLivro AND reserva.idUsuario = usuario.idUsuario LIMIT {$linha_inicial}, " . QTDE_REGISTROS;
+    $statement = $pdo->prepare($sql);
+}
 $statement->execute();
 $dados = $statement->fetchAll(PDO::FETCH_OBJ);
 
 /* Conta quantos registos existem na tabela*/
-
-$sqlContador = "SELECT COUNT(*) AS total_registros FROM livro, exemplar where livro.idLivro = exemplar.idLivro AND livro.idLivro = :id";
-$statement = $pdo->prepare($sqlContador);
-$statement->bindValue(":id", $idLivro);
-
+if(!empty($_POST['busca']) && $_POST['filtro'] == "titulo") {
+    $sqlContador = "SELECT COUNT(*) AS total_registros FROM reserva, livro, usuario where reserva.idLivro = reserva.idLivro AND reserva.idUsuario = usuario.idUsuario AND livro.titulo like :busca";
+    $statement = $pdo->prepare($sqlContador);
+    $statement->bindValue(':busca', '%' . $busca . '%');
+}
+if(!empty($_POST['busca']) && $_POST['filtro'] == "usuario") {
+    $sqlContador = "SELECT COUNT(*) AS total_registros FROM reserva, livro, usuario where reserva.idLivro = livro.idLivro AND reserva.idUsuario = usuario.idUsuario AND usuario.nome like :busca";
+    $statement = $pdo->prepare($sqlContador);
+    $statement->bindValue(':busca', '%' . $busca . '%');
+}
+else{
+    $sqlContador = "SELECT COUNT(*) AS total_registros FROM reserva, livro, usuario where reserva.idLivro = livro.idLivro AND reserva.idUsuario = usuario.idUsuario";
+    $statement = $pdo->prepare($sqlContador);
+}
 $statement->execute();
 $valor = $statement->fetch(PDO::FETCH_OBJ);
 
@@ -88,7 +112,7 @@ $exibir_botao_final = ($range_final > $pagina_atual) ? 'mostrar' : 'esconder';
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <title>WebBook - Exemplar</title>
+    <title>WebBook - Reserva</title>
 
 </head>
 <body>
@@ -123,8 +147,35 @@ cabecalho();
 
             <div id="DivRegistroTabela" class="container col-md-12">
                 <div class="row">
+                    <!--Form de busca de registros-->
+                    <form method="post">
+                        <div class="container col-md-8">
+                            <div class="form-row">
+                                <div id="buscarRegistro" class='input-group'>
+                                    <input id='busca' name="busca" type='text' class='form-control' placeholder='Buscar reserva no sistema...'>
+                                    <div class='input-group-btn'>
+                                        <button id='BotaoPesquisar' class='btn btn-warning' type='submit'>
+                                            <i class='glyphicon glyphicon-search'></i>  BUSCAR
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div id="filtroBuscar" class="col-md-6">
+                                <select class="form-control" id="filtro" name="filtro" required >
+                                    <option disabled selected>Selecione um filtro...</option>
+                                    <option value="titulo" name="titulo">Buscar por Título</option>
+                                    <option value="usuario" name="usuario">Buscar por Usuário</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                    <br/>
+                    <!--Fim do form de busca de registros-->
+                </div>
+                <div class="row">
                     <div class="col-md-12">
-                        <h1>Consulta de Exemplares do Acervo</h1>
+                        <h1>Lista de Reservas no Sistema</h1>
                         <hr id="hrRegistros">
                         <p id="msgExibirRegistro"><?php if(isset($_GET['msg'])){
                                 echo $_GET['msg'];
@@ -136,25 +187,16 @@ cabecalho();
                                 <tr>
                                     <th>Livro</th>
                                     <th>Título</th>
-                                    <th>Exemplar</th>
-                                    <th>Circular</th>
-                                    <th>Tipo</th>
-                                    <th>Status</th>
-                                    <?php
-                                    if($_SESSION['tipoUsuario'] == "3" || $_SESSION['tipoUsuario'] == "5"){
-                                        echo"
-                                        <th>Emprestar</th>
-                                        <th colspan='2'>Reservar</th>
-                                        ";
-                                    }
-                                    ?>
+                                    <th>Data da Reserva</th>
+                                    <th>Usuário</th>
+                                    <th>Ações</th>
                                 </tr>
                                 </thead>
                                 <tbody id="tbodyRegistro">
                                 <?php if (!empty($dados)) {
 
-                                foreach ($dados as $livro) {
-                                    if($livro->capa == null || $livro->capa == ""){
+                                foreach ($dados as $reserva) {
+                                    if($reserva->capa == null || $reserva->capa == ""){
                                         echo "
                                         <tr>                        
                                         <td><img src='../imagens/livros/capaLivroPadrao.gif' width='60px'></td>";
@@ -162,40 +204,37 @@ cabecalho();
                                     else{
                                         echo "
                                         <tr>                        
-                                        <td><img src='../imagens/livros/".$livro->idLivro."/".$livro->capa. "' width='60px'></td>";
+                                        <td><img src='../imagens/livros/".$reserva->idLivro."/".$reserva->capa. "' width='60px'></td>";
                                     }
 
                                     echo "
-                        <td>$livro->titulo</td>
-                        <td>$livro->idExemplar</td>
-                        <td>$livro->circular</td>
-                        <td>$livro->tipo</td>
-                        <td>$livro->status</td>";
-                        if($_SESSION['tipoUsuario'] == "3" || $_SESSION['tipoUsuario'] == "5"){
-                            if($livro->status == "Disponivel"){
-                                echo"
-                                <td><a href='emprestimoUsuario.view.php?exemplar=".$livro->idExemplar."'><i class='glyphicon glyphicon-plus-sign'></i>  Emprestar</a></td>
-                                ";
-                            }else{
-                                echo "<td>Indisponível</td>";
-                            }
-                        }
-
-                        if($_SESSION['tipoUsuario'] == "3" || $_SESSION['tipoUsuario'] == "5"){
-                            if($livro->status == "Emprestado"){
-                                $emprestimoDAO = new emprestimoDao();
-                                $emprestimo = $emprestimoDAO->buscarPeloExemplarEmprestado($livro->idExemplar);
-                                echo "
-                                <td>Devolução em ".date('d-m-Y', strtotime($emprestimo->getDataDevolucao()))."</td>
-                                <td><a href='../view/reservaUsuario.view.php?exemplar=".$livro->idExemplar."&status=Emprestado'><i class='glyphicon glyphicon-plus-sign'></i>  Reservar</a></td>
-                                ";
-                            }else{
-                                echo"<td>Disponível para Reserva</td>
-                                <td><a href='../view/reservaUsuario.view.php?exemplar=".$livro->idExemplar."'><i class='glyphicon glyphicon-plus-sign'></i>  Reservar</a></td>
-                                ";
-                            }
-                        }
-                    echo"</tr>                    
+                        <td>$reserva->titulo</td>
+                        <td>".date('d-m-Y', strtotime($reserva->dataReserva))."</td>
+                        <td>$reserva->nome</td>
+                        <td><a  data-toggle='modal' data-target='#myModal".$reserva->idReserva."' id='tdRemover' href='#?id=".$reserva->idReserva."'><i class='glyphicon glyphicon-remove'></i>  Cancelar Reserva</a></td>
+                    </tr>
+                    <!-- Modal -->
+                    <div id='myModal".$reserva->idReserva."' class='modal fade' role='dialog'>
+                        <div class='modal-dialog'>
+        
+                            <!-- Modal content-->
+                            <div class='modal-content'>
+                                <div id='cabecalhoModal' class='modal-header'>
+                                    <button id='fecharModal' type='button' class='close' data-dismiss='modal'>&times;</button>
+                                    <h4 class='modal-title'>Confirmação de Cancelamento</h4>
+                                </div>
+                                <div id='bodyModal' class='modal-body'>
+                                    <p>Confirmar o cancelamento de reserva ?</p>
+                                </div>
+                                <div id='rodapeModal' class='modal-footer'>
+                                    <a id='aBotaoRemover' class='btn btn-warning' href='../controller/Reserva.action.php?act=del&id=".$reserva->idReserva."'>Cancelar</a>
+                                    <button id='aBotaoCancelar' type='button' class='btn btn-default' data-dismiss='modal'>Fechar</button>
+                                </div>
+                            </div>
+                            <!-- Fim Modal Content -->
+                        </div>
+                    </div>
+                    <!-- Fim Modal -->
                     ";
                                 }
                                 ?>
@@ -211,7 +250,7 @@ cabecalho();
                             <li class='page-item'>
 
                                 <?php
-                                if(!empty($_GET['busca'])) {
+                                if(!empty($_POST['busca'])) {
                                     echo "<a class='page-link $exibir_botao_inicio' href='$endereco?page=$primeira_pagina&busca=$busca' title='Primeira Página'>&laquo; Primeira  </a>";
                                 }else{
                                     echo "<a class='page-link $exibir_botao_inicio' href='$endereco?page=$primeira_pagina' title='Primeira Página'>&laquo; Primeira  </a>";
@@ -221,7 +260,7 @@ cabecalho();
                             </li>
                             <li class='page-item'>
                                 <?php
-                                if(!empty($_GET['busca'])) {
+                                if(!empty($_POST['busca'])) {
                                     echo"<a class='page-link $exibir_botao_inicio' href='$endereco?page=$pagina_anterior&busca=$busca' title='Página Anterior'>‹ Anterior  </a>";
                                 }else{
                                     echo"<a class='page-link $exibir_botao_inicio' href='$endereco?page=$pagina_anterior' title='Página Anterior'>‹ Anterior  </a>";
@@ -234,7 +273,7 @@ cabecalho();
                                 $destaque = ($i == $pagina_atual) ? 'destaque' : '';
                                 echo "
                 <li class='page-item'>";
-                                if(!empty($_GET['busca'])) {
+                                if(!empty($_POST['busca'])) {
                                     echo "<a class='page-link $destaque' href='$endereco?page=$i&busca=$busca'>  $i  </a>";
                                 }else{
                                     echo "<a class='page-link $destaque' href='$endereco?page=$i'>  $i  </a>";
@@ -247,7 +286,7 @@ cabecalho();
 
                             <li class='page-item'>
                                 <?php
-                                if(!empty($_GET['busca'])) {
+                                if(!empty($_POST['busca'])) {
                                     echo"<a class='page-link $exibir_botao_final' href='$endereco?page=$proxima_pagina&busca' title='Próxima Página'> Próxima ›</a>";
                                 }else{
                                     echo"<a class='page-link $exibir_botao_final' href='$endereco?page=$proxima_pagina' title='Próxima Página'> Próxima ›</a>";
@@ -256,7 +295,7 @@ cabecalho();
                             </li>
                             <li class='page-item'>
                                 <?php
-                                if(!empty($_GET['busca'])) {
+                                if(!empty($_POST['busca'])) {
                                     echo"<a class='page-link $exibir_botao_final' href='$endereco?page=$ultima_pagina&busca'  title='Última Página'> Última &raquo;</a>";
                                 }else{
                                     echo"<a class='page-link $exibir_botao_final' href='$endereco?page=$ultima_pagina'  title='Última Página'> Última &raquo;</a>";
@@ -287,7 +326,7 @@ cabecalho();
 
 
 <?php
-rodapePagPequena();
+rodape();
 ?>
 
 </body>
