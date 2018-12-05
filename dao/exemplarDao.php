@@ -25,6 +25,7 @@ class exemplarDao implements genericsDao
 
             if($statement->execute()){
                 if($statement->rowCount()>0){
+                    $objeto->setIdExemplar($pdo->lastInsertId());
                     return"<script>alert('Cadastro realizado com sucesso');</script>";
                 }
                 else{
@@ -127,6 +128,27 @@ class exemplarDao implements genericsDao
 
         try{
             $statement= $pdo->prepare("SELECT * FROM exemplar ");
+            if($statement->execute()){
+
+                $result = $statement->fetchAll(PDO::FETCH_OBJ);
+
+                return $result;
+            } else {
+                throw new PDOException("<script> alert('Não foi possível executar o código SQL !'); </script>");
+            }
+        } catch (PDOException $erro) {
+            return "Ocorreu um erro: " . $erro->getMessage();
+
+        }
+    }
+
+    public function buscarTodosPorLivro($id)
+    {
+        global $pdo;
+
+        try{
+            $statement= $pdo->prepare("SELECT * FROM exemplar WHERE idLivro = :id");
+            $statement->bindValue(":id",$id);
             if($statement->execute()){
 
                 $result = $statement->fetchAll(PDO::FETCH_OBJ);

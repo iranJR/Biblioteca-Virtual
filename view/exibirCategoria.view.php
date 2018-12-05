@@ -6,6 +6,19 @@
  * Time: 16:19
  */
 
+session_start();
+
+if(empty($_SESSION['idUsuario']) && empty($_SESSION['tipoUsuario']) && empty($_SESSION['nomeUsuario'])){
+    $msg = "É necessário estar logado no sitema para acessar essa página !";
+    echo "<script>window.location.href='../view/login.view.php?msg=".$msg."'</script>";
+}
+
+//Segunda verificação de segurança.
+if($_SESSION['tipoUsuario'] == "1" || $_SESSION['tipoUsuario'] == "2" || $_SESSION['tipoUsuario'] == "3"){
+    $msg = "Atenção: Você não possui autorização para acessar essa área do site !";
+    echo "<script>window.location.href='../view/index.php?msg=".$msg."'</script>";
+}
+
 require_once ("../view/templateIndex.php");
 require_once ('../banco/conexao_bd.php');
 
@@ -100,7 +113,18 @@ cabecalho();
     <div class="row content">
 
         <?php
-        menuLateralAdmin();
+        if($_SESSION['tipoUsuario'] == "1" || $_SESSION['tipoUsuario'] == "2"){
+            menuLateralUsuario();
+        }
+        if($_SESSION['tipoUsuario'] == "3"){
+            menuLateralFuncionario();
+        }
+        if($_SESSION['tipoUsuario'] == "4"){
+            menuLateralBibliotecario();
+        }
+        if($_SESSION['tipoUsuario'] == "5"){
+            menuLateralAdmin();
+        }
         ?>
 
         <!--Conteudo Principal-->

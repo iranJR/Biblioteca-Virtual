@@ -24,18 +24,21 @@
 <body>
 
 <div id="divLogin" class="col-sm-4">
-    <form>
+    <form method="post" action="../controller/Login.action.php">
         <h1>Bem vindo a WebBook</h1>
         <h3>Sua biblioteca virtual</h3>
         <hr>
         <h3>Faça agora o seu login</h3>
+        <p><?php if(isset($_GET['msg'])){
+                echo $_GET['msg'];
+            } ?></p>
         <div class="form-group">
             <label for="exampleInputEmail1">Login:</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Digite aqui o seu e-mail...">
+            <input type="email" name="login" class="form-control" id="exampleInputEmail1" required aria-describedby="emailHelp" placeholder="Digite aqui o seu e-mail...">
         </div>
         <div class="form-group">
             <label for="exampleInputPassword1">Senha:</label>
-            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Digite aqui sua senha...">
+            <input type="password" name="senha" class="form-control" id="exampleInputPassword1" required placeholder="Digite aqui sua senha...">
         </div>
         <button id="botaoLogin" type="submit" class="btn btn-info">Entrar</button>
     </form>

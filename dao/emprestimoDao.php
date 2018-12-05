@@ -24,6 +24,7 @@ class emprestimoDao implements genericsDao
             $statement->bindValue(":situacao",$objeto->getSituacao());
             if($statement->execute()){
                 if($statement->rowCount()>0){
+                    $objeto->setIdEmprestimo($pdo->lastInsertId());
                     return"<script>alert('Cadastro realizado com sucesso');</script>";
                 }
                 else{

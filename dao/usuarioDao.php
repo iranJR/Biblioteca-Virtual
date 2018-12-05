@@ -152,7 +152,35 @@ class usuarioDao implements genericsDao
             if($statement->execute()){
                 $rs= $statement->fetch(PDO::FETCH_OBJ);
 
-                $objeto = new Usuario();
+                $objeto = new Usuario('','','','','','');
+
+                $objeto->setIdUsuario($rs->idUsuario);
+                $objeto->setNome($rs->nome);
+                $objeto->setCpf($rs->cpf);
+                $objeto->setLogin($rs->login);
+                $objeto->setSenha($rs->senha);
+                $objeto->setIdTipoUsuario($rs->idTipoUsuario);
+
+                return $objeto;
+            }
+            else {
+                throw new PDOException("<script> alert('Não foi possível executar o código SQL !'); </script>");
+            }
+        } catch (PDOException $erro) {
+            return "Ocorreu um erro: " . $erro->getMessage();
+        }
+
+    }
+
+    public function buscarByLogin($login){
+        global $pdo;
+        try{
+            $statement = $pdo->prepare("SELECT * FROM usuario WHERE login = :login");
+            $statement->bindValue(":login",$login);
+            if($statement->execute()){
+                $rs= $statement->fetch(PDO::FETCH_OBJ);
+
+                $objeto = new Usuario('','','','','','');
 
                 $objeto->setIdUsuario($rs->idUsuario);
                 $objeto->setNome($rs->nome);

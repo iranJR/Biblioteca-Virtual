@@ -338,3 +338,69 @@
 }
 
 /*Fim Cadastro / Edição de Registro*/
+
+/*Início Div do Arquivo Digital Exemplar*/
+
+#arquivoDigital{
+    display: none;
+}
+
+/*Fim Div do Arquivo Digital Exemplar*/
+
+/*Inicio View Exibir Exemplar*/
+
+#tdListarExemplar i{
+    color: #3EC374;
+}
+
+/*Fim View Exibir Exemplar*/
+
+/* Início Exibir Acervo */
+
+#filtroBuscar{
+    margin-left: 15px;
+}
+
+/* Fim Exibir Acervo */
+
+/*Início Img Fundo Index*/
+
+#divIndexImg{
+    background-image: url('../imagens/bibliotecaIndex.jpg');
+    background-repeat: no-repeat;
+    background-size: 100% 128%;
+    height: 500px;
+}
+
+#divLogin{
+    margin-top: 100px;
+    margin-left: 250px;
+    background-color: rgba(63, 19, 55, 0.5);
+    padding: 2%;
+    color: white;
+    border-radius: 20px;
+    font-weight: bold;
+    display: none;
+
+}
+
+#divLogin h1{
+    font-weight: bold;
+    text-align: center;
+}
+
+#divLogin h3{
+    font-weight: bold;
+    text-align: center;
+}
+
+#botaoLogin{
+    text-align: center;
+    font-weight: bold;
+    font-size: 16px;
+    width: 30%;
+    background-color: #3EC374;
+    border-color: #3EC374;
+}
+
+/*Fim Img Fundo Index*/

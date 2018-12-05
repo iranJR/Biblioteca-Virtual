@@ -6,6 +6,19 @@
  * Time: 21:25
  */
 
+session_start();
+
+if(empty($_SESSION['idUsuario']) && empty($_SESSION['tipoUsuario']) && empty($_SESSION['nomeUsuario'])){
+    $msg = "É necessário estar logado no sitema para acessar essa página !";
+    echo "<script>window.location.href='../view/login.view.php?msg=".$msg."'</script>";
+}
+
+//Segunda verificação de segurança.
+if($_SESSION['tipoUsuario'] == "1" || $_SESSION['tipoUsuario'] == "2" || $_SESSION['tipoUsuario'] == "3"){
+    $msg = "Atenção: Você não possui autorização para acessar essa área do site !";
+    echo "<script>window.location.href='../view/index.php?msg=".$msg."'</script>";
+}
+
 require_once ("../view/templateIndex.php");
 require_once ('../banco/conexao_bd.php');
 
@@ -100,7 +113,18 @@ cabecalho();
     <div class="row content">
 
         <?php
-        menuLateral();
+        if($_SESSION['tipoUsuario'] == "1" || $_SESSION['tipoUsuario'] == "2"){
+            menuLateralUsuario();
+        }
+        if($_SESSION['tipoUsuario'] == "3"){
+            menuLateralFuncionario();
+        }
+        if($_SESSION['tipoUsuario'] == "4"){
+            menuLateralBibliotecario();
+        }
+        if($_SESSION['tipoUsuario'] == "5"){
+            menuLateralAdmin();
+        }
         ?>
 
         <!--Conteudo Principal-->
@@ -172,7 +196,7 @@ cabecalho();
                         <td><a href='../view/cadastroLivro.view.php?id=".$livro->idLivro."'><i class='glyphicon glyphicon-pencil'></i>  Alterar</a></td>
                         <td><a  data-toggle='modal' data-target='#myModal".$livro->idLivro."' id='tdRemover' href='#?id=".$livro->idLivro."'><i class='glyphicon glyphicon-remove'></i>  Remover</a></td>
                         <td><a data-toggle='modal' data-target='#myModalDetalhes".$livro->idLivro."' id='tdDetalhes' href='#?id=".$livro->idLivro."'><i class='	glyphicon glyphicon-info-sign' ></i>  Detalhes</a></td>
-                        <td><a href='#?id=".$livro->idLivro."' id='tdIncluirExemplar'><i class='glyphicon glyphicon-plus-sign'></i>  Incluir Exemplar</a></td>
+                        <td><a href='../view/cadastroExemplar.view.php?livro=".$livro->idLivro."' id='tdIncluirExemplar'><i class='glyphicon glyphicon-plus-sign'></i>  Incluir Exemplar</a></td>
                     </tr>
                     <!-- Modal -->
                     <div id='myModal".$livro->idLivro."' class='modal fade' role='dialog'>
@@ -322,7 +346,7 @@ cabecalho();
 
 
 <?php
-rodapePagPequena();
+rodape();
 ?>
 
 </body>
